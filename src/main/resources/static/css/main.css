@@ -1,0 +1,7 @@
+.ms-nav-link a.active{
+    color: darkorange !important;
+}
+
+.highlighted-pizza {
+    background-color: chartreuse !important;
+}

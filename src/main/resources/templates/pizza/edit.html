@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Edit Pizza</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container mt-5">
+        <h2>Edit Pizza</h2>
+
+        <!-- Updated form action to point to the edit endpoint -->
+        <form th:action="@{/pizza/update/{id}(id=${pizza.id})}" th:object="${pizza}" method="post" class="mt-4">
+            <div class="row">
+                <!-- Name Field -->
+                <div class="col-md-6 mb-3">
+                    <div th:replace="fragments/UI/formFragments :: textInput(
+                            'Name',
+                            'pizzaName',
+                            'name',
+                            'Enter pizza name',
+                            false,
+                            'name',
+                            ${pizza.getName()})">
+                    </div>
+                </div>
+
+                <!-- Description Field -->
+                <div class="col-md-6 mb-3">
+                    <div th:replace="fragments/UI/formFragments :: textareaInput(
+                            'Description',
+                            'pizzaDescription',
+                            'description',
+                            3,
+                            'Enter description',
+                            'description',
+                            ${pizza.description})">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Image URL Field -->
+                <div class="col-md-6 mb-3">
+                    <div th:replace="fragments/UI/formFragments :: textInput(
+                            'Image URL',
+                            'pizzaImageUrl',
+                            'url',
+                            'Enter image URL',
+                            false,
+                            'url',
+                            ${pizza.getUrl()})">
+                    </div>
+                </div>
+
+                <!-- Price Field -->
+                <div class="col-md-6 mb-3">
+                    <div th:replace="fragments/UI/formFragments :: numberInput(
+                            'Price',
+                            'pizzaPrice',
+                            'price',
+                            'Enter price',
+                            false,
+                            'price',
+                            ${pizza.getPrice()})">
+                    </div>
+                </div>
+
+                <!-- Ingredients Section -->
+                <div class="row mt-4">
+                    <div class="col">
+                        <h3>Select Ingredients</h3>
+                        <div class="row">
+                            <div class="col-3" th:each="ingredient, iterStat : ${ingredients}">
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           th:value="${ingredient.id}"
+                                           th:id="'ingredient' + ${iterStat.index}"
+                                           th:name="ingredients"
+                                           th:checked="${pizza.ingredients.contains(ingredient)}"/>
+                                    <label class="form-check-label" th:for="'ingredient' + ${iterStat.index}"
+                                           th:text="${ingredient.name}"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

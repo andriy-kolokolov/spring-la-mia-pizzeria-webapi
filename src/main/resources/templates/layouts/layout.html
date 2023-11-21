@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragments/head :: head}">
+        <title layout:fragment="title">Default Title</title>
+    </head>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <main
+            class="container-fluid"
+            layout:fragment="content"
+    ></main>
+
+</body>
+</html>

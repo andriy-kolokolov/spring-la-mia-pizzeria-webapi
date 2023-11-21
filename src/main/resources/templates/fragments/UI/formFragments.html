@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form Fragments</title>
+</head>
+<body>
+
+<!-- Text Input Fragment -->
+<div th:fragment="textInput(label, id, name, placeholder, required, fieldName, fieldValue)">
+    <label
+            th:for="${id}"
+            class="form-label"
+            th:text="${label}"
+    ></label>
+    <input
+            type="text"
+            class="form-control"
+            th:id="${id}"
+            th:name="${name}"
+            th:placeholder="${placeholder}"
+            th:required="${required}"
+            th:value="${fieldValue}"
+    />
+    <p
+            th:if="${#fields.hasErrors(fieldName)}"
+            th:errors="*{__${fieldName}__}"
+            class="text-danger"
+    ></p>
+</div>
+
+<!-- Textarea Fragment -->
+<div th:fragment="textareaInput(label, id, name, rows, placeholder, fieldName, fieldValue)">
+    <label
+            th:for="${id}"
+            class="form-label"
+            th:text="${label}"
+    ></label>
+    <textarea
+            class="form-control"
+            th:id="${id}"
+            th:name="${name}"
+            th:attr="rows=${rows}"
+            th:placeholder="${placeholder}"
+            th:text="${fieldValue}"
+    ></textarea>
+    <p
+            th:if="${#fields.hasErrors(fieldName)}"
+            th:errors="*{__${fieldName}__}"
+            class="text-danger"
+    ></p>
+</div>
+
+<!-- Number Input Fragment -->
+<div th:fragment="numberInput(label, id, name, placeholder, required, fieldName, fieldValue)">
+    <label
+            th:for="${id}"
+            class="form-label"
+            th:text="${label}"
+    ></label>
+    <input
+            type="number"
+            class="form-control"
+            th:id="${id}"
+            th:name="${name}"
+            th:placeholder="${placeholder}"
+            th:required="${required}"
+            th:value="${fieldValue}"
+    />
+    <p
+            th:if="${#fields.hasErrors(fieldName)}"
+            th:errors="*{__${fieldName}__}"
+            class="text-danger"
+    ></p>
+</div>
+
+</body>
+</html>

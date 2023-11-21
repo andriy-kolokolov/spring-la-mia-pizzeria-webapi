@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}"
+>
+<head>
+    <title>Pizza List</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="my-3 row justify-content-between">
+        <div class="col">
+            <h2 class="text-primary fw-bold">Pizza List</h2>
+        </div>
+
+        <div class="col d-flex justify-content-end align-items-center">
+            <a th:href="@{/pizza/create}">
+                <div class="btn btn-primary">Add Pizza +</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Search Form -->
+    <form th:action="@{/pizza}" method="get">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+                    <input
+                            class="form-control"
+                            type="text"
+                            name="name"
+                            placeholder="Search by name"
+                            aria-label="Username"
+                            aria-describedby="addon-wrapping"
+                    />
+                    <button class="btn btn-success" type="submit" id="button-addon1">Search</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <!--    ALERTS    -->
+    <div th:if="${message}" class="mt-3 alert alert-success" role="alert">
+        <span th:text="${message}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="mt-3 alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <table class="mt-3 table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image URL</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pizza : ${pizzas}" th:classappend="${#arrays.isEmpty(pizza.specialOffers)} ? '' : 'table-success'">
+            <td th:text="${pizza.id}"></td>
+            <td th:text="${pizza.name}"></td>
+            <td th:text="${pizza.description}"></td>
+            <td th:text="${pizza.url}"></td>
+            <td th:text="${pizza.price}"></td>
+            <td>
+                <!-- Special Offers List -->
+                <div th:if="${#arrays.isEmpty(pizza.specialOffers)}">
+                    <ul>
+                        <li th:each="offer : ${pizza.specialOffers}" th:text="${offer.title} + ' (' + ${offer.startDate} + ' - ' + ${offer.endDate} + ')'"></li>
+                    </ul>
+                </div>
+                <a th:href="@{/special-offer/create(pizzaId=${pizza.id})}" class="btn btn-info">Create Special Offer</a>
+                <a th:href="@{/pizza/{id}(id=${pizza.id})}" class="btn btn-primary">Show</a>
+                <a th:href="@{/pizza/edit/{id}(id=${pizza.id})}" class="btn btn-primary">Edit</a>
+                <form th:action="@{/pizza/delete/{id}(id=${pizza.id})}" method="post" style="display: inline-block;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

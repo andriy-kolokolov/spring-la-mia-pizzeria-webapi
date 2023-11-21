@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Ingredient List</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="my-3 row justify-content-between">
+        <div class="col">
+            <h2 class="text-primary fw-bold">Ingredient List</h2>
+        </div>
+
+        <div class="col d-flex justify-content-end align-items-center">
+            <a th:href="@{/ingredient/create}">
+                <div class="btn btn-primary">Add Ingredient +</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Search Form -->
+    <form th:action="@{/ingredient}" method="get">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input
+                            class="form-control"
+                            type="text"
+                            name="name"
+                            placeholder="Search by name"
+                            aria-label="Ingredient search"
+                            aria-describedby="addon-wrapping"
+                    />
+                    <button class="btn btn-success" type="submit" id="button-addon1">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--    ALERTS    -->
+    <div th:if="${message}" class="mt-3 alert alert-success" role="alert">
+        <span th:text="${message}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="mt-3 alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <table class="mt-3 table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ingredient : ${ingredients}">
+            <td th:text="${ingredient.id}"></td>
+            <td th:text="${ingredient.name}"></td>
+            <td>
+                <a th:href="@{/ingredient/edit/{id}(id=${ingredient.id})}" class="btn btn-primary">Edit</a>
+                <form th:action="@{/ingredient/delete/{id}(id=${ingredient.id})}" method="post" style="display: inline-block;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
