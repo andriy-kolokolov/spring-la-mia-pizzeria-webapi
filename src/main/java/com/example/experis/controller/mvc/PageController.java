@@ -1,4 +1,4 @@
-package com.example.experis.controller;
+package com.example.experis.controller.mvc;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

@@ -9,6 +9,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.*;
+
 @Configuration
 public class SecurityConfiguration {
 
@@ -32,14 +34,22 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers("/ingredients").hasAuthority("ADMIN")
-                .requestMatchers("/offers/**").hasAuthority("ADMIN")
-                .requestMatchers("/users").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/pizzas/**").hasAuthority("ADMIN")
-                .requestMatchers("/pizzas", "/pizzas/**").hasAnyAuthority("ADMIN", "USER")
-                .requestMatchers("/**").permitAll()
-                .and().formLogin().and().logout();
+        // allow for all api requests
+        http
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/ingredient", "/special-offer/**", "/users")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/pizza/**")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers("/pizza", "/pizza/**")
+                        .hasAnyAuthority("ADMIN", "USER")
+                        .anyRequest().permitAll()
+
+                )
+                .csrf().disable()
+                .formLogin(withDefaults())
+                .logout(withDefaults());
+
         return http.build();
     }
 

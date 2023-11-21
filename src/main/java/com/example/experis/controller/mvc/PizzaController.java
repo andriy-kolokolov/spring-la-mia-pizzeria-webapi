@@ -1,4 +1,4 @@
-package com.example.experis.controller;
+package com.example.experis.controller.mvc;
 
 import com.example.experis.model.Ingredient;
 import com.example.experis.service.IngredientService;

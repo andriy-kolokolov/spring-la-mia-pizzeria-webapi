@@ -1,6 +1,8 @@
 package com.example.experis.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -16,6 +18,10 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "pizzas")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Pizza {
 
     @Id

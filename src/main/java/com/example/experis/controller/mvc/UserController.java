@@ -1,4 +1,4 @@
-package com.example.experis.controller;
+package com.example.experis.controller.mvc;
 
 import com.example.experis.model.User;
 import com.example.experis.repository.UserRepository;
