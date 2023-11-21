@@ -43,6 +43,11 @@ public class IngredientService {
         ingredientRepository.save(ingredient);
     }
 
+    public Ingredient saveGet(Ingredient ingredient) {
+        ingredientRepository.save(ingredient);
+        return ingredient;
+    }
+
     public void delete(Long id) {
         ingredientRepository.deleteById(id);
     }

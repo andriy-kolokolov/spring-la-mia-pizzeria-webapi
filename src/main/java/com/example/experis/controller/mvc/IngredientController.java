@@ -42,18 +42,6 @@ public class IngredientController {
         return "ingredient/index";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable Long id, Model model) {
-        Ingredient ingredient = ingredientService.getIngredientById(id);
-        if (ingredient == null) {
-            return "redirect:/ingredient";
-        }
-        model.addAttribute("ingredient", ingredient);
-        model.addAttribute("route", "ingredient");
-
-        return "ingredient/show";
-    }
-
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("ingredient", new Ingredient());
